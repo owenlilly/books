@@ -3,6 +3,7 @@ const path = require('path');
 const config = {
   context: path.resolve(__dirname, 'public/src'),
   entry: {
+    app: './index.js',
     home: './home/index.js'
   },
   output: {
@@ -23,11 +24,7 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: [{
-            loader: "style-loader" // creates style nodes from JS strings
-        }, {
-            loader: "css-loader" // translates CSS into CommonJS
-        }]
+        use: [ 'style-loader', 'css-loader' ]
       }
     ]
   }
