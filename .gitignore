@@ -1,3 +1,7 @@
 node_modules
 .env
 package-lock.json
+docs
+public/js/*.map
+public/js/*.bundle.js
+dist
