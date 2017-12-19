@@ -36,6 +36,11 @@ export default class UserService {
       return Object.assign({}, user, {password: hash});
     }).flatMap(u => {
       return this.userRepo.save(u);
+    }).map(u => {
+      return {
+        id: u._id,
+        email: u.email
+      };
     });
   }
 
