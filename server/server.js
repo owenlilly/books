@@ -14,9 +14,11 @@ mongoose.Promise = global.Promise;
 const app = express();
 
 const PORT = process.env.PORT || 3500;
+const SECRET = process.env.SECRET;
 const staticPath = path.join(__dirname, '..', 'public');
 
 const authErrorHandler = (err, req, res, next) => {
+  console.log(err);
   if (err.name === 'UnauthorizedError') {
     if (!req.headers['authorization'] || req.headers['authorization'] === '') {
       res.status(401).json({error: 'No authorization token found'});
@@ -32,7 +34,7 @@ app.use(express.static(staticPath));
 app.use(authErrorHandler);
 app.use(cookieParser());
 app.use(expressJwt({ 
-  secret: process.env.SECRET,
+  secret: SECRET,
   credentialsRequired: false,
   getToken: function(req){
     if(req.headers && req.headers.authorization) {
@@ -54,7 +56,7 @@ app.use(expressJwt({
       }
 
       return token;
-    } else if(req.cookies && req.cookies.sessToken){
+    } else if(req.cookies && req.cookies.sessToken) {
       return req.cookies.sessToken;
     }
   }
@@ -69,5 +71,10 @@ app.get('/', (req, res) => {
 
 // init controllers
 AccountController(app);
+
+// catch all API handler
+app.all('/api/*', (req, res) => {
+  res.status(404).json({error: 'Endpoint not found'});
+});
 
 app.listen(PORT, () => console.log('listening on port', PORT));
