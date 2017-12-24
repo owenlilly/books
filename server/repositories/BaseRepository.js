@@ -69,6 +69,8 @@ export default class BaseRepository {
         // Force the Type to be type ObjectId
         if(typeof id === 'string' || id instanceof String){
             return mongoose.Types.ObjectId(id);
+        } else if(!(id instanceof mongoose.Types.ObjectId)){
+            throw new Error(`id must be of type 'string' or 'mongoose.Types.ObjectId', ${id} given`);
         }
 
         return id;

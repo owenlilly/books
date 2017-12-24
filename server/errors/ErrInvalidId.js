@@ -1,5 +1,5 @@
 export class ErrInvalidId {
   constructor(msg){
-    this.messsage = msg || 'Invalid id';
+    this.message = msg || 'Invalid id';
   }
 }
