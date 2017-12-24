@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
 import cookieParser from 'cookie-parser';
 import AccountController from './api/AccountController';
+import BookController from './api/BookController';
 
 mongoose.connect(process.env.MONGO_URI, { useMongoClient: true });
 mongoose.Promise = global.Promise;
@@ -70,7 +71,8 @@ app.get('/', (req, res) => {
 });
 
 // init controllers
-AccountController(app);
+AccountController(app, SECRET);
+BookController(app);
 
 // catch all API handler
 app.all('/api/*', (req, res) => {
